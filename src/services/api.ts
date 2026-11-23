@@ -8,7 +8,14 @@ export async function apiFetch<T>(ruta: string, opciones: RequestInit = {}): Pro
   const token = localStorage.getItem("token");
   if (token) headers.set("Authorization", `Bearer ${token}`);
 
-  const res = await fetch(`${API_URL}${ruta}`, { ...opciones, headers });
+  let res: Response;
+  try {
+    res = await fetch(`${API_URL}${ruta}`, { ...opciones, headers });
+  } catch (error) {
+    // Si la petición se canceló a propósito, dejamos pasar el error tal cual
+    if (error instanceof DOMException && error.name === "AbortError") throw error;
+    throw new Error("No se pudo conectar con el servidor");
+  }
 
   if (res.status === 204) return undefined as T;
 
