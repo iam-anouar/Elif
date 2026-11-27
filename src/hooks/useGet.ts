@@ -7,8 +7,8 @@ interface Resultado<T> {
   error: string;
 }
 
-// Hook reutilizable para CONSULTAR datos del servidor (peticiones GET)
-export function useGet<T>(url: string) {
+// Hook reutilizable para CONSULTAR datos del servidor (peticiones GET
+export function useGet<T>(url: string | null) {
   const [version, setVersion] = useState(0); // al cambiar, se vuelve a pedir
   const [resultado, setResultado] = useState<Resultado<T>>({
     peticion: "",
@@ -19,7 +19,10 @@ export function useGet<T>(url: string) {
   // Identifica la petición actual: cambia si cambia la url o se pide recargar
   const peticion = `${url}#${version}`;
 
+ 
   useEffect(() => {
+    if (!url) return; // nada que pedir
+
     const controller = new AbortController();
 
     apiFetch<T>(url, { signal: controller.signal })
@@ -37,7 +40,8 @@ export function useGet<T>(url: string) {
   }, [url, peticion]);
 
   // Valor derivado: si la respuesta que tenemos no es de la petición actual, está cargando
-  const cargando = resultado.peticion !== peticion;
+
+  const cargando = url !== null && resultado.peticion !== peticion;
 
   function recargar() {
     setVersion((v) => v + 1);

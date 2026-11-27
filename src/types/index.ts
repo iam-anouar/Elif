@@ -14,7 +14,8 @@ export interface Categoria {
   descripcion: string;
   activa: boolean;
 }
-
+// Los datos que se envían al crear o editar (todo menos el _id)
+export type DatosCategoria = Omit<Categoria, "_id">;
 export interface Producto {
   _id: string;
   nombre: string;
