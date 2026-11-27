@@ -1,8 +1,11 @@
+export type Rol = "admin" | "usuario";
+
 export interface Usuario {
   id: string;
   nombre: string;
   email: string;
   createdAt?: string;
+  rol?: Rol;
 }
 
 export interface Categoria {

@@ -1,11 +1,13 @@
 import { createContext, useEffect, useState } from "react";
 import type { ReactNode } from "react";
 import { apiFetch } from "../services/api";
+import { leerRol } from "../services/token";
 import type { Usuario, RespuestaLogin } from "../types";
 
 interface AuthContextType {
   usuario: Usuario | null;
   autenticado: boolean;
+    esAdmin: boolean;
   comprobando: boolean;
   login: (email: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
@@ -20,12 +22,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   // Al cargar la aplicación: si hay token, preguntamos al servidor quién es
   useEffect(() => {
-    if (!localStorage.getItem("token")) return;
+      const token = localStorage.getItem("token");
+    if (!token) return;
 
     const controller = new AbortController();
 
     apiFetch<{ usuario: Usuario }>("/auth/me", { signal: controller.signal })
-      .then((datos) => setUsuario(datos.usuario))
+            .then((datos) => setUsuario({ ...datos.usuario, rol: leerRol(token) }))
       .catch((error) => {
         if (controller.signal.aborted) return;
         console.error(error);
@@ -44,7 +47,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       body: JSON.stringify({ email, password }),
     });
     localStorage.setItem("token", datos.token);
-    setUsuario(datos.usuario);
+        setUsuario({ ...datos.usuario, rol: leerRol(datos.token) });
   }
 
   async function logout() {
@@ -60,7 +63,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   return (
     <AuthContext.Provider
-      value={{ usuario, autenticado: usuario !== null, comprobando, login, logout }}
+           value={{
+        usuario,
+        autenticado: usuario !== null,
+        // Solo se ocultan opciones si sabemos seguro que NO es admin
+        esAdmin: usuario !== null && usuario.rol !== "usuario",
+        comprobando,
+        login,
+        logout,
+      }}
     >
       {children}
     </AuthContext.Provider>
