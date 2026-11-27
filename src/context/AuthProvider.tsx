@@ -1,19 +1,9 @@
-import { createContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import type { ReactNode } from "react";
 import { apiFetch } from "../services/api";
 import { leerRol } from "../services/token";
 import type { Usuario, RespuestaLogin } from "../types";
-
-interface AuthContextType {
-  usuario: Usuario | null;
-  autenticado: boolean;
-    esAdmin: boolean;
-  comprobando: boolean;
-  login: (email: string, password: string) => Promise<void>;
-  logout: () => Promise<void>;
-}
-
-export const AuthContext = createContext<AuthContextType | null>(null);
+import { AuthContext } from "./AuthContext";
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [usuario, setUsuario] = useState<Usuario | null>(null);
@@ -22,13 +12,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   // Al cargar la aplicación: si hay token, preguntamos al servidor quién es
   useEffect(() => {
-      const token = localStorage.getItem("token");
+    const token = localStorage.getItem("token");
     if (!token) return;
 
     const controller = new AbortController();
 
     apiFetch<{ usuario: Usuario }>("/auth/me", { signal: controller.signal })
-            .then((datos) => setUsuario({ ...datos.usuario, rol: leerRol(token) }))
+      .then((datos) => setUsuario({ ...datos.usuario, rol: leerRol(token) }))
       .catch((error) => {
         if (controller.signal.aborted) return;
         console.error(error);
@@ -47,7 +37,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       body: JSON.stringify({ email, password }),
     });
     localStorage.setItem("token", datos.token);
-        setUsuario({ ...datos.usuario, rol: leerRol(datos.token) });
+    setUsuario({ ...datos.usuario, rol: leerRol(datos.token) });
   }
 
   async function logout() {
@@ -63,7 +53,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   return (
     <AuthContext.Provider
-           value={{
+      value={{
         usuario,
         autenticado: usuario !== null,
         // Solo se ocultan opciones si sabemos seguro que NO es admin

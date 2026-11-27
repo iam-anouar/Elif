@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
-
 import { Link } from "react-router-dom";
+
 // Componentes pequeños reutilizables que usan los valores del tema
 
 export const Boton = styled.button<{ variante?: "primario" | "peligro" | "secundario" }>`
@@ -9,7 +9,7 @@ export const Boton = styled.button<{ variante?: "primario" | "peligro" | "secund
   border-radius: ${({ theme }) => theme.radios.md};
   font: inherit;
   cursor: pointer;
-  color: #fff;
+  color: ${({ theme }) => theme.colores.textoSobrePrimario};
   background: ${({ theme, variante = "primario" }) =>
     variante === "peligro"
       ? theme.colores.peligro
@@ -39,8 +39,6 @@ export const Titulo = styled.h1`
   font-size: 1.6rem;
 `;
 
-
-
 export const Campo = styled.label`
   display: flex;
   flex-direction: column;
@@ -66,7 +64,7 @@ export const MensajeError = styled.p`
   margin: 0 0 ${({ theme }) => theme.espacios.md};
   padding: ${({ theme }) => theme.espacios.sm};
   border-radius: ${({ theme }) => theme.radios.md};
-  background: #fbe4e2;
+  background: ${({ theme }) => theme.colores.peligroFondo};
   color: ${({ theme }) => theme.colores.peligro};
 `;
 
@@ -75,14 +73,13 @@ export const TextoSuave = styled.p`
   color: ${({ theme }) => theme.colores.textoSuave};
 `;
 
-
 // Un enlace con aspecto de botón (para "Nuevo" y "Editar")
 export const EnlaceBoton = styled(Link)`
   display: inline-block;
   padding: ${({ theme }) => `${theme.espacios.sm} ${theme.espacios.md}`};
   border-radius: ${({ theme }) => theme.radios.md};
   background: ${({ theme }) => theme.colores.primario};
-  color: #fff;
+  color: ${({ theme }) => theme.colores.textoSobrePrimario};
   text-decoration: none;
 
   &:hover {
@@ -134,6 +131,7 @@ export const Etiqueta = styled.span<{ activa: boolean }>`
   padding: 2px ${({ theme }) => theme.espacios.sm};
   border-radius: ${({ theme }) => theme.radios.sm};
   font-size: 0.85rem;
-  background: ${({ activa }) => (activa ? "#e3f2e8" : "#eceff2")};
+  background: ${({ theme, activa }) =>
+    activa ? theme.colores.exitoFondo : theme.colores.neutroFondo};
   color: ${({ theme, activa }) => (activa ? theme.colores.exito : theme.colores.textoSuave)};
 `;

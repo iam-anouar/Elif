@@ -10,6 +10,10 @@ export const theme = {
     texto: "#1f2933",
     textoSuave: "#616e7c",
     borde: "#d9dee4",
+    textoSobrePrimario: "#ffffff",
+    peligroFondo: "#fbe4e2",
+    exitoFondo: "#e3f2e8",
+    neutroFondo: "#eceff2",
   },
   espacios: {
     xs: "4px",

@@ -1,27 +1,9 @@
 import { useState } from "react";
 import type { FormEvent } from "react";
-import styled from "@emotion/styled";
 import { Navigate, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
-import { Boton, Campo, Input, MensajeError, Tarjeta, Titulo, TextoSuave } from "../components/ui";
-
-// Ocupa toda la pantalla y centra la tarjeta
-const Pantalla = styled.div`
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: ${({ theme }) => theme.espacios.md};
-`;
-
-const TarjetaLogin = styled(Tarjeta)`
-  width: 100%;
-  max-width: 380px;
-`;
-
-const BotonAncho = styled(Boton)`
-  width: 100%;
-`;
+import { Campo, Input, MensajeError, Titulo, TextoSuave } from "../components/ui";
+import { Pantalla, TarjetaLogin, BotonAncho } from "./Login.styles";
 
 function Login() {
   const { login, autenticado } = useAuth();
