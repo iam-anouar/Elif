@@ -37,3 +37,39 @@ export const Titulo = styled.h1`
   margin: 0 0 ${({ theme }) => theme.espacios.lg};
   font-size: 1.6rem;
 `;
+
+
+
+export const Campo = styled.label`
+  display: flex;
+  flex-direction: column;
+  gap: ${({ theme }) => theme.espacios.xs};
+  margin-bottom: ${({ theme }) => theme.espacios.md};
+  font-weight: 600;
+`;
+
+export const Input = styled.input`
+  padding: ${({ theme }) => theme.espacios.sm};
+  border: 1px solid ${({ theme }) => theme.colores.borde};
+  border-radius: ${({ theme }) => theme.radios.md};
+  font: inherit;
+  font-weight: normal;
+
+  &:focus {
+    outline: 2px solid ${({ theme }) => theme.colores.primario};
+    border-color: transparent;
+  }
+`;
+
+export const MensajeError = styled.p`
+  margin: 0 0 ${({ theme }) => theme.espacios.md};
+  padding: ${({ theme }) => theme.espacios.sm};
+  border-radius: ${({ theme }) => theme.radios.md};
+  background: #fbe4e2;
+  color: ${({ theme }) => theme.colores.peligro};
+`;
+
+export const TextoSuave = styled.p`
+  margin: 0;
+  color: ${({ theme }) => theme.colores.textoSuave};
+`;
