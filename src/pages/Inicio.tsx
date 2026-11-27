@@ -5,6 +5,7 @@ import { useGet } from "../hooks/useGet";
 import { Tarjeta, Titulo, TextoSuave } from "../components/ui";
 import type { Categoria, RespuestaProductos } from "../types";
 
+// Estilos: pocos, así que van en el mismo archivo
 const Rejilla = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));

@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 
+
 const Circulo = styled.span<{ tamano: number }>`
   display: inline-flex;
   align-items: center;

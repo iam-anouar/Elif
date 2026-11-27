@@ -4,6 +4,7 @@ import Perfil from "./pages/Perfil";
 import Inicio from "./pages/Inicio";
 import Productos from "./pages/Productos";
 import Categorias from "./pages/Categorias";
+import CategoriaEditar from "./pages/CategoriaEditar";
 import NotFound from "./pages/NotFound";
 import RutaPrivada from "./components/RutaPrivada";
 import Layout from "./components/Layout";
@@ -19,6 +20,8 @@ function App() {
           <Route path="/perfil" element={<Perfil />} />
           <Route path="/productos" element={<Productos />} />
           <Route path="/categorias" element={<Categorias />} />
+                    <Route path="/categorias/nueva" element={<CategoriaEditar />} />
+          <Route path="/categorias/:id/editar" element={<CategoriaEditar />} />
         </Route>
       </Route>
 

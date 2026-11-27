@@ -5,6 +5,7 @@ import Avatar from "../components/Avatar";
 import { MensajeError, Tarjeta, Titulo, TextoSuave } from "../components/ui";
 import type { Usuario } from "../types";
 
+// Estilos: pocos, así que van en el mismo archivo
 const Cabecera = styled.div`
   display: flex;
   align-items: center;
