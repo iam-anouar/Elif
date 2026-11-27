@@ -1,7 +1,27 @@
 import { useState } from "react";
 import type { FormEvent } from "react";
+import styled from "@emotion/styled";
 import { Navigate, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
+import { Boton, Campo, Input, MensajeError, Tarjeta, Titulo, TextoSuave } from "../components/ui";
+
+// Ocupa toda la pantalla y centra la tarjeta
+const Pantalla = styled.div`
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: ${({ theme }) => theme.espacios.md};
+`;
+
+const TarjetaLogin = styled(Tarjeta)`
+  width: 100%;
+  max-width: 380px;
+`;
+
+const BotonAncho = styled(Boton)`
+  width: 100%;
+`;
 
 function Login() {
   const { login, autenticado } = useAuth();
@@ -37,25 +57,31 @@ function Login() {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h1>Iniciar sesión</h1>
+    <Pantalla>
+      <TarjetaLogin>
+        <Titulo>Mi Tienda</Titulo>
+        <TextoSuave>Inicia sesión para gestionar la tienda</TextoSuave>
+        <br />
 
-      <label>
-        Email
-        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-      </label>
+        <form onSubmit={handleSubmit}>
+          <Campo>
+            Email
+            <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+          </Campo>
 
-      <label>
-        Contraseña
-        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-      </label>
+          <Campo>
+            Contraseña
+            <Input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+          </Campo>
 
-      {error && <p>{error}</p>}
+          {error && <MensajeError>{error}</MensajeError>}
 
-      <button type="submit" disabled={enviando}>
-        {enviando ? "Entrando..." : "Entrar"}
-      </button>
-    </form>
+          <BotonAncho type="submit" disabled={enviando}>
+            {enviando ? "Entrando..." : "Entrar"}
+          </BotonAncho>
+        </form>
+      </TarjetaLogin>
+    </Pantalla>
   );
 }
 
